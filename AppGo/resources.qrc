@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/AboutPage.qml</file>
+        <file>qml/App.qml</file>
+        <file>qml/Applist.qml</file>
+        <file>qml/AppListPage.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/MainPage.qml</file>
+        <file>qml/Mainwindow.qml</file>
+        <file>qml/Powersave.qml</file>
+        <file>qml/SettingsAccount.qml</file>
+        <file>qml/Storage.js</file>
+        <file>fonts/AgencyFB.ttf</file>
+        <file>images/activated.png</file>
+        <file>images/background.png</file>
+        <file>images/background-about.png</file>
+        <file>images/background-about-swipe.png</file>
+        <file>images/background-applist.png</file>
+        <file>images/background-back.png</file>
+        <file>images/background-remove.png</file>
+        <file>images/background-settings.png</file>
+        <file>images/background-settings-swipe.png</file>
+        <file>images/black.png</file>
+        <file>images/inactivated.png</file>
+        <file>images/information-icon.png</file>
+        <file>images/powersave.png</file>
+        <file>images/youtube.png</file>
+        <file>images/BACK_SIDE.png</file>
+        <file>images/BOTTOM_SIDE.png</file>
+        <file>images/FRONT_SIDE.png</file>
+        <file>images/LEFT_SIDE.png</file>
+        <file>images/RIGHT_SIDE.png</file>
+        <file>images/TOP_SIDE.png</file>
+    </qresource>
+</RCC>

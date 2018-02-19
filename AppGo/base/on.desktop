@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=AppGo
+Exec=/bin/sh /opt/AppGo/base/service.sh
+Icon=/opt/AppGo/base/on.png

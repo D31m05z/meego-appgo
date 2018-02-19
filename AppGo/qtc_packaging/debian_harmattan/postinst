@@ -1,0 +1,12 @@
+#!/bin/sh
+chmod 667 /usr/share/applications/AppGo_harmattan.desktop
+
+sed -i 's/PowerKeyDoubleAction=disabled/PowerKeyDoubleAction=dbus-signal-powerkey_double_ind/g' /etc/mce/mce.ini
+
+echo "Restarting mce..."
+/sbin/stop mce
+/sbin/start mce
+
+/sbin/start apps/extended-power-menu
+
+exit 0
