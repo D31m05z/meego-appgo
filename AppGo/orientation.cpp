@@ -45,21 +45,24 @@ Orientation::Orientation(QObject *parent) :
     root->setProperty("actualState","Front side");
 }
 
-Orientation::~Orientation() {
+Orientation::~Orientation()
+{
     delete m_sensor;
 }
 
-void Orientation::setActive(bool enable){
+void Orientation::setActive(bool enable)
+{
     active = enable;
 }
 
-void Orientation::vibrate(){
+void Orientation::vibrate()
+{
 
 }
 
 void Orientation::onReadingChanged()
 {
-    if(active){
+    if(active) {
         QOrientationReading* reading = m_sensor->reading();
         switch(reading->orientation())
         {

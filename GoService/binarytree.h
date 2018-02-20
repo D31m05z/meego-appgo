@@ -48,24 +48,23 @@ struct Node
 
 class BinaryTree
 {
-Node* lastFound;
+    Node* lastFound;
 private:
 
     void Insert(int newData, Node* &theRoot)
     {
-        if(theRoot == NULL)
-        {
+        if(theRoot == NULL) {
             theRoot = new Node(newData);
-          //  qDebug() << "new"<<newData;
+            //  qDebug() << "new"<<newData;
             last = theRoot;
 
             return;
         }
 
-        if(newData == theRoot->data){
-             last = theRoot;
-        }else {
-             Insert(newData, theRoot->nodes[newData]);
+        if(newData == theRoot->data) {
+            last = theRoot;
+        } else {
+            Insert(newData, theRoot->nodes[newData]);
         }
     }
 
@@ -74,9 +73,7 @@ private:
     {
         QString extraTab;
         level++;
-        if(theRoot != NULL)
-        {
-
+        if(theRoot != NULL) {
             for (int j = 0; j < level; ++j) {
                 extraTab+="-";
             }
@@ -88,41 +85,42 @@ private:
         }
     }
 
-    bool FindCommand(Node* theRoot, int command, int level) {
+    bool FindCommand(Node* theRoot, int command, int level)
+    {
         level++;
         //qDebug()<<"inCommand:"<<command<<" level:"<<level;
 
-        if(theRoot != NULL)
-        {
+        if(theRoot != NULL) {
             for (int i = 0; i < 7; ++i) {
                 if(theRoot->nodes[i] != NULL)
-                if(command == theRoot->nodes[i]->data)
-                {
-                    qDebug() << "FOUND COMMAND:" << command;
-                    lastFound = theRoot->nodes[i];
-                    return true;
-                }else lastFound = root;
+                    if(command == theRoot->nodes[i]->data) {
+                        qDebug() << "FOUND COMMAND:" << command;
+                        lastFound = theRoot->nodes[i];
+                        return true;
+                    } else lastFound = root;
             }
         }
         return false;
     }
 
-    bool canExecute(Node* last){
-        if(last->exec.size() != 0){
+    bool canExecute(Node* last)
+    {
+        if(last->exec.size() != 0) {
             qDebug() << "can execute:" << last->exec;
             return true;
         }
         return false;
     }
 
-    void execute(Node* last){
-         QProcess process;
-         qDebug()<<"STARTING>" << last->exec;
+    void execute(Node* last)
+    {
+        QProcess process;
+        qDebug()<<"STARTING>" << last->exec;
 
-       /*  MNotification notification(MNotification::DeviceEvent, "", QObject::tr("starting..."));
+        /*  MNotification notification(MNotification::DeviceEvent, "", QObject::tr("starting..."));
          notification.setImage("icon-m-user-guide");
          notification.publish();*/
-         process.startDetached(last->exec);
+        process.startDetached(last->exec);
     }
 
 public:
@@ -144,32 +142,36 @@ public:
             Insert(newData, root);
 
         //    qDebug() << "ROOT" << root->data;
-         //   qDebug() << "LAST" << last->data;
+        //    qDebug() << "LAST" << last->data;
     }
 
-    void AddItem(QString program) {
+    void AddItem(QString program)
+    {
         last->exec = program;
     }
 
-    void PrintTree() {
+    void PrintTree()
+    {
         PrintTree(root,0);
     }
 
-    bool FindCommand(int cmd) {
+    bool FindCommand(int cmd)
+    {
         if(lastFound == NULL || cmd ==0)
             lastFound = root;
 
         return FindCommand(lastFound,cmd,0);
     }
 
-    bool canExecute(){
+    bool canExecute()
+    {
         return canExecute(lastFound);
     }
 
-    void execute(){
+    void execute()
+    {
         execute(lastFound);
     }
 };
-
 
 #endif // BINARYTREE_H

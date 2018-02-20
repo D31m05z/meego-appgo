@@ -26,13 +26,12 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Page{
+Page {
     id: iSuspend
     opacity: 0
     orientationLock:  PageOrientation.LockPortrait
 
     FontLoader { id: iFont; source: "../fonts/AgencyFB.ttf" }
-
 
     Image {
         id: main
@@ -61,7 +60,6 @@ Page{
             font.family: iFont.name
         }
     }
-
 
     states: [
         State {

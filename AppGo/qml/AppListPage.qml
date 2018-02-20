@@ -27,7 +27,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.meego.extras 1.0
 
-Page{
+Page {
     id: appListPage
     opacity: 0
     orientationLock:  PageOrientation.LockPortrait
@@ -135,8 +135,6 @@ Page{
     }
     //----------------swipe---------------------------------
 
-
-
     Applist {
         id: applist
 
@@ -146,7 +144,6 @@ Page{
         anchors.bottomMargin: 0
         anchors.fill: parent
     }
-
 
     states: [
         State {

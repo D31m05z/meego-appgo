@@ -28,10 +28,9 @@
 
 #include "orientation.h"
 
-Orientation::Orientation(QObject *parent) :
-    QObject(parent)
+Orientation::Orientation(QObject *parent)
+    : QObject(parent)
 {
-
     active = false;
     qDebug() << "Sarting sensores" << endl;
 
@@ -42,29 +41,26 @@ Orientation::Orientation(QObject *parent) :
     connect(m_sensor, SIGNAL(readingChanged()), SLOT(onReadingChanged()));
     m_sensor->start();
 
-
-  //qDebug() << "rezeg" <<endl;
-  //vibrate();
-
-
-
+    //qDebug() << "rezeg" <<endl;
+    //vibrate();
 }
 
-Orientation::~Orientation() {
+Orientation::~Orientation()
+{
     delete m_sensor;
-  //  qDebug() << "rumble elott" << endl;
+    //  qDebug() << "rumble elott" << endl;
     //delete rumble;
     //qDebug() << "rumble utan" << endl;
 }
 
-void Orientation::setActive(bool enable){
-   qDebug() << "SENSORE_ACTIV? >" << enable;
-   active = enable;
+void Orientation::setActive(bool enable)
+{
+    qDebug() << "SENSORE_ACTIV? >" << enable;
+    active = enable;
 }
 
-void Orientation::vibrate(){
-
-
+void Orientation::vibrate()
+{
 
 }
 
@@ -72,48 +68,48 @@ void Orientation::onReadingChanged()
 {
     if(!active) return;
 
-  QOrientationReading* reading = m_sensor->reading();
-  switch(reading->orientation())
-  {
-  case QOrientationReading::TopUp:
-  //  qDebug() << "TopUp" << endl;
-    vibrate();
+    QOrientationReading* reading = m_sensor->reading();
+    switch(reading->orientation())
+    {
+    case QOrientationReading::TopUp:
+        //  qDebug() << "TopUp" << endl;
+        vibrate();
 
-    emit orientationChanged(QOrientationReading::TopUp);
-    break;
-  case QOrientationReading::TopDown:
-  //  qDebug() << "TopDown" << endl;
-    vibrate();
+        emit orientationChanged(QOrientationReading::TopUp);
+        break;
+    case QOrientationReading::TopDown:
+        //  qDebug() << "TopDown" << endl;
+        vibrate();
 
-    emit orientationChanged(QOrientationReading::TopDown);
-    break;
-  case QOrientationReading::LeftUp:
-  //  qDebug() << "LeftUp" << endl;
-    vibrate();
+        emit orientationChanged(QOrientationReading::TopDown);
+        break;
+    case QOrientationReading::LeftUp:
+        //  qDebug() << "LeftUp" << endl;
+        vibrate();
 
-    emit orientationChanged(QOrientationReading::LeftUp);
-    break;
-  case QOrientationReading::RightUp:
-  //  qDebug() << "RightUp" << endl;
-    vibrate();
+        emit orientationChanged(QOrientationReading::LeftUp);
+        break;
+    case QOrientationReading::RightUp:
+        //  qDebug() << "RightUp" << endl;
+        vibrate();
 
-    emit orientationChanged(QOrientationReading::RightUp);
-    break;
-  case QOrientationReading::FaceDown:
-  //  qDebug() << "FaceDown" << endl;
-    vibrate();
+        emit orientationChanged(QOrientationReading::RightUp);
+        break;
+    case QOrientationReading::FaceDown:
+        //  qDebug() << "FaceDown" << endl;
+        vibrate();
 
-    emit orientationChanged(QOrientationReading::FaceDown);
-    break;
-  case QOrientationReading::FaceUp:
-  //  qDebug() << "FaceUp" << endl;
-    vibrate();
-   // passwordActiv = true;
-   // player->stop();
+        emit orientationChanged(QOrientationReading::FaceDown);
+        break;
+    case QOrientationReading::FaceUp:
+        //  qDebug() << "FaceUp" << endl;
+        vibrate();
+        // passwordActiv = true;
+        // player->stop();
 
-    emit orientationChanged(QOrientationReading::FaceUp);
-    break;
-  default:
-    break;
-  }
+        emit orientationChanged(QOrientationReading::FaceUp);
+        break;
+    default:
+        break;
+    }
 }

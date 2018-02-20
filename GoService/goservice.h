@@ -47,7 +47,8 @@
 //using namespace std;
 //#define qDebug() cout
 
-enum Sounds{
+enum Sounds
+{
     LOGIN=0,
     PASS=1,
     WRONG=2,
@@ -66,7 +67,7 @@ public:
     void activate();
 
 public slots:
-    void onChangeOrientationChange(int state); 
+    void onChangeOrientationChange(int state);
     void powerBtnDoubleClick();
     void startApp();
     void timeOut();

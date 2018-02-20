@@ -34,7 +34,6 @@ Item {
     property alias applist:  applist
 
     function addIcon(exec,name,icon,active) {
-        //applist.insert({"exec": exec, "name": name, "icon": icon, "selected": false})
         applist.append({"exec": exec, "name": name, "icon": icon, "selected": active})
 
         if (applist.count == 1) {

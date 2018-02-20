@@ -38,7 +38,6 @@ Page {
 
     FontLoader { id: iFont; source: "../fonts/AgencyFB.ttf" }
 
-
     QueryDialog {
         opacity: 0.5
         id: youTube
@@ -50,7 +49,6 @@ Page {
             youTube.close();
         }
     }
-
 
     Image {
         id: background
@@ -91,21 +89,6 @@ Page {
         //----------------swipe---------------------------------
     }
 
-    /*
-     Column {
-         x:20
-         y:270
-
-         Text {
-             font.pointSize: 25
-             font.family: iFont.name
-             text: ""
-             color: "red"
-             font.bold: true
-         }
-     }*/
-
-
     Text {
         x:30
         y:150
@@ -125,8 +108,6 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         text: "reflesh"
-
-
 
         onClicked: {
             myGo.reflash();
@@ -161,7 +142,6 @@ Page {
 
     Text {  font.pointSize: 40; text: "AppGo 2013"; anchors.bottom: parent.bottom; anchors.bottomMargin: 40; anchors.horizontalCenterOffset: 0; font.bold: true; verticalAlignment: Text.AlignTop; horizontalAlignment: Text.AlignHCenter; anchors.horizontalCenter: parent.horizontalCenter; font.family: iFont.name; color:"white"}
     Text {  font.pointSize: 20; text: "developer: Gergely Boross | aFagylaltos(c)"; anchors.bottom: parent.bottom; anchors.bottomMargin: 20; anchors.horizontalCenterOffset: 0; font.bold: false; verticalAlignment: Text.AlignTop; horizontalAlignment: Text.AlignHCenter; anchors.horizontalCenter: parent.horizontalCenter; font.family: iFont.name; color:"white"}
-
 
     states: [
         State {

@@ -38,7 +38,6 @@ Page {
 
     FontLoader { id: iFont; source: "../fonts/AgencyFB.ttf" }
 
-
     Image {
         id: background
         anchors.fill: parent
@@ -142,12 +141,8 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter;
     }
 
-
-
-
     Text {  font.pointSize: 40; text: selectd; anchors.bottom: parent.bottom; anchors.bottomMargin: 40; anchors.horizontalCenterOffset: 0; font.bold: true; verticalAlignment: Text.AlignTop; horizontalAlignment: Text.AlignHCenter; anchors.horizontalCenter: parent.horizontalCenter; font.family: iFont.name; color:"white"}
     Text {  font.pointSize: 20; text: "developer: Gergely Boross | aFagylaltos(c)"; anchors.bottom: parent.bottom; anchors.bottomMargin: 20; anchors.horizontalCenterOffset: 0; font.bold: false; verticalAlignment: Text.AlignTop; horizontalAlignment: Text.AlignHCenter; anchors.horizontalCenter: parent.horizontalCenter; font.family: iFont.name; color:"white"}
-
 
     states: [
         State {

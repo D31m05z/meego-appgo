@@ -37,13 +37,9 @@ PageStackWindow {
     property int selectdIndex;
     property bool activated: false
 
-
     initialPage: Mainwindow {
         id: root;
     }
 
-
     showToolBar: false
 }
-
-

@@ -50,8 +50,7 @@ private:
 
     void Insert(int newData, Node* &theRoot, int l)
     {
-        if(theRoot == NULL)
-        {
+        if(theRoot == NULL) {
             theRoot = new Node(newData);
             qDebug() << "new"<<newData;
             last = theRoot;
@@ -59,9 +58,9 @@ private:
             return;
         }
 
-        if(newData == theRoot->data){
+        if(newData == theRoot->data) {
             last = theRoot;
-        }else {
+        } else {
             Insert(newData, theRoot->nodes[newData],l);
         }
     }
@@ -71,9 +70,7 @@ private:
     {
         QString extraTab;
         level++;
-        if(theRoot != NULL)
-        {
-
+        if(theRoot != NULL) {
             for (int j = 0; j < level; ++j) {
                 extraTab+="-";
             }
@@ -109,7 +106,8 @@ public:
         // qDebug() <<"REQUIREST LEVEL"<<level;
     }
 
-    void AddItem(QString program){
+    void AddItem(QString program)
+    {
         last->exec = program;
     }
 

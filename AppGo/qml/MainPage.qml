@@ -27,7 +27,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.meego.extras 1.0
 
-Page{
+Page {
     id: irMAIN
     orientationLock:  PageOrientation.LockPortrait
 
@@ -39,7 +39,6 @@ Page{
     property real oldY: 0
     property real changeX: 0
     property bool mousePressed: false
-
 
     Image {
         id: swipe_settings
@@ -57,16 +56,12 @@ Page{
         source: "../images/background-about-swipe.png"
     }
 
-
-
     Image {
         id: backGround
         source:  "../images/background.png"
         anchors.fill: parent
         z:-1
         opacity:  15/Math.abs(changeX)
-
-
 
         //----------------swipe---------------------------------
         MouseArea {
@@ -155,7 +150,6 @@ Page{
             }
         }
 
-
         states: [
             State {
                 name: "list"
@@ -212,7 +206,6 @@ Page{
             }
         }
     }
-
 
     Column {
         opacity:  1/Math.abs(changeX)

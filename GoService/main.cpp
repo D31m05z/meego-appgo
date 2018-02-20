@@ -50,6 +50,5 @@ int main(int argc, char *argv[])
 
     signal(SIGTERM, term);
 
-
     return app->exec();
 }

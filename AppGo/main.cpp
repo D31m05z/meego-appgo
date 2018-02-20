@@ -26,10 +26,9 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative>
 #include <QSplashScreen>
-#include "qmlapplicationviewer.h"
 #include <QDebug>
 
-
+#include "qmlapplicationviewer.h"
 #include "gosystem.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -42,11 +41,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     pSplash->setPixmap(QPixmap("/opt/AppGo/base/splash.png"));
     pSplash->show();
 
-
     //---------------- notify -----------------
     //MComponentData::createInstance(argc, argv);
     //-----------------------------------------*/
-
 
     qDebug() << "$viewer" << endl;
     QDeclarativeView viewer;
@@ -66,4 +63,3 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     return app->exec();
 }
-

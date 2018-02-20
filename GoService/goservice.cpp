@@ -25,7 +25,9 @@
 
 #include "goservice.h"
 
-GoService::GoService(QObject *parent): QObject(parent) {
+GoService::GoService(QObject *parent)
+    : QObject(parent)
+{
     playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/login.wav"));
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/beep.wav"));
@@ -61,7 +63,8 @@ GoService::GoService(QObject *parent): QObject(parent) {
     connect(killerTimer, SIGNAL(timeout()), this, SLOT(timeOut()));
 }
 
-GoService::~GoService(){
+GoService::~GoService()
+{
     delete orientation;
     delete myBT;
     delete playlist;
@@ -69,31 +72,34 @@ GoService::~GoService(){
     delete timer;
 }
 
-void GoService::activate(){
-  /*  MNotification notification(MNotification::DeviceEvent, "", QObject::tr("AppGo! show the start command..."));
+void GoService::activate()
+{
+    /*  MNotification notification(MNotification::DeviceEvent, "", QObject::tr("AppGo! show the start command..."));
     notification.setImage("icon-m-user-guide");
     notification.publish();
 */
-     orientation->setActive(true);
-     vibrate(1000,0.4f);
-     killerTimer->start();
+    orientation->setActive(true);
+    vibrate(1000,0.4f);
+    killerTimer->start();
 }
 
-QString rstrip(const QString& str) {
-  int n = str.size() - 1;
-  for (; n >= 0; --n) {
-    if (!str.at(n).isSpace()) {
-      return str.left(n + 1);
+QString rstrip(const QString& str)
+{
+    int n = str.size() - 1;
+    for (; n >= 0; --n) {
+        if (!str.at(n).isSpace()) {
+            return str.left(n + 1);
+        }
     }
-  }
-  return "";
+    return "";
 }
 
-void GoService::loadConfig(){
+void GoService::loadConfig()
+{
     QFile file("/home/user/appgo.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug() << "ERROR: open file";
-      return;
+        return;
     }
 
     int index = 0;
@@ -116,7 +122,7 @@ void GoService::loadConfig(){
                 }
             }
         }else if (index == 3 ){
-             myBT->AddItem(line);
+            myBT->AddItem(line);
             index=0;
         }
     }
@@ -125,7 +131,8 @@ void GoService::loadConfig(){
 }
 
 
-void GoService::vibrate(int duration, qreal intensity){
+void GoService::vibrate(int duration, qreal intensity)
+{
     QFeedbackHapticsEffect* rumble = new QFeedbackHapticsEffect();
     rumble->setAttackIntensity(0.0);
     rumble->setAttackTime(100);
@@ -137,13 +144,14 @@ void GoService::vibrate(int duration, qreal intensity){
     rumble->start();
 }
 
-void GoService::startApp(){
+void GoService::startApp()
+{
     myBT->execute();
     orientation->setActive(false);
 }
 
-void GoService::timeOut(){
-
+void GoService::timeOut()
+{
     MNotification notification(MNotification::DeviceEvent, "", QObject::tr("timeout"));
     notification.setImage("icon-m-user-guide");
     notification.publish();
@@ -154,10 +162,11 @@ void GoService::timeOut(){
     player->play();
 }
 
-void GoService::onChangeOrientationChange(int state){
+void GoService::onChangeOrientationChange(int state)
+{
     qDebug() << "orientation:"<<state;
 
-    if(killerTimer->isActive()){
+    if(killerTimer->isActive()) {
         killerTimer->stop();
         killerTimer->start();
     }
@@ -165,13 +174,13 @@ void GoService::onChangeOrientationChange(int state){
     if(timer->isActive())
         timer->stop();
 
-    if(myBT->FindCommand(state)){
+    if(myBT->FindCommand(state)) {
         qDebug() << "PASS";
         playlist->setCurrentIndex(PASS);
         playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
         player->play();
 
-        if(myBT->canExecute()){
+        if(myBT->canExecute()) {
             playlist->setCurrentIndex(START);
             playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
             player->play();
@@ -179,12 +188,12 @@ void GoService::onChangeOrientationChange(int state){
             killerTimer->stop();
 
             //------------------------timer-----------
-             timer->start();
+            timer->start();
             //----------------------------------------
         }
-    }else {
+    } else {
         qDebug() << "WRONG";
-       /* MNotification notification(MNotification::DeviceEvent, "", QObject::tr("unknown command"));
+        /* MNotification notification(MNotification::DeviceEvent, "", QObject::tr("unknown command"));
         notification.setImage("icon-m-user-guide");
         notification.publish();
 */
@@ -197,7 +206,8 @@ void GoService::onChangeOrientationChange(int state){
     }
 }
 
-void GoService::powerBtnDoubleClick(){
+void GoService::powerBtnDoubleClick()
+{
     qDebug() << "powerBtn double click" << endl;
 
     playlist->setCurrentIndex(LOGIN);

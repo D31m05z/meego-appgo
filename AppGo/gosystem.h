@@ -48,7 +48,8 @@
 
 using namespace std;
 
-struct Item{
+struct Item
+{
     QString exec;
     int code[7];
     QString command;
@@ -85,17 +86,17 @@ signals:
     void addApp(QVariant, QVariant, QVariant,QVariant);
 
 private:
-    QObject* root;
-    Orientation* orientation;
     bool passRecord;
     int codeNumber;
+    bool hasConfigFile;
+
+    QObject* root;
+    Orientation* orientation;
     QFile* passFile;
     QString selected;
     QHash<QString,Item> applications;
-
     QMediaPlayer* player;
     QMediaPlaylist* playlist;
-    bool fileNotExist;
 };
 
 #endif // GOSYSTEM_H

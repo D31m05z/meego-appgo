@@ -33,7 +33,6 @@ Page {
 
     orientationLock:  PageOrientation.LockPortrait
 
-
     function addNewIcon(exec,name,icon,active){
         //  console.log("addNewIcon");
         app.addIcon(exec,name,icon,active)
@@ -60,7 +59,6 @@ Page {
             if (res != "Unknown") {
                 index = parseInt(res)
             }
-
 
             res = Storage.getSetting("encoding")
             if (res != "Unknown") {
@@ -96,22 +94,7 @@ Page {
         }
 
         Component.onDestruction: {
-
             console.log("onDestruction | SAVE SETTINGS");
-            /*
-            Storage.setSetting("volume", volume)
-            Storage.setSetting("index", index)
-            Storage.setSetting("encoding", encoding)
-            Storage.setSetting("sample_rate", sample_rate)
-            Storage.setSetting("bitrate", bitrate)
-            Storage.setSetting("advancedUse", advancedUse)
-            Storage.setSetting("container", container)
-            Storage.setSetting("saveFolder", saveFolder)
-            Storage.setSetting("cdQuality", cdQuality)
-
-*/
-            //  Storage.setApplist(applist)
-
             //    myGo.exitAndActivating();
             console.log("onDestruction | SAVED");
         }
@@ -119,7 +102,6 @@ Page {
     }
 
     ///////////////////////////////////////////////////
-
 
     PageStack {
         id: pageStack
@@ -158,10 +140,6 @@ Page {
 
     Component.onCompleted: {
         pageStack.push(imainPage);
-        //   itemEditorQ.open();
-
-
-
     }
 
     Component.onDestruction: {
@@ -171,31 +149,21 @@ Page {
             myGo.stopPasswordRecord();
 
         myGo.beforeExit();
-
-        //    if(exitActivator)
-        //        mySecurity.startService(false);
     }
 
     function powerSaveON(){
         if(pageStack.currentPage!=suspend){
             pageStack.push(suspend);
             console.log("=====SUSPEND-SWITCH-==ON=======");
-
-            //   if(mySecurity.isPassRecording())
-            //       mySecurity.stopPasswordRecord();
         }
     }
 
     function powerSaveOFF(){
         if(pageStack.currentPage!=imainPage){
-            //      mySecurity.orientationEnable(false);
             pageStack.push(imainPage);
             console.log("=====SUSPEND-SWITCH-==OFF======");
         }
     }
-
-
-
 
     states: [
         State {
