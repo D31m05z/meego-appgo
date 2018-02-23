@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *

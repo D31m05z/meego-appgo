@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -33,6 +33,7 @@ GoService::GoService(QObject *parent)
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/beep.wav"));
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/wrong.wav"));
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/start.wav"));
+
     playlist->setCurrentIndex(LOGIN);
     playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 
@@ -46,7 +47,6 @@ GoService::GoService(QObject *parent)
     connect(orientation, SIGNAL(orientationChanged(int)), SLOT(onChangeOrientationChange(int)));
 
     binaryTree = new BinaryTree();
-
     loadConfig();
 
     PowerButtonListener* listener = new PowerButtonListener(this);
@@ -76,14 +76,17 @@ GoService::~GoService()
     delete playlist;
     delete player;
     delete timer;
+    delete rumble;
 }
 
 void GoService::activate()
 {
-    /*  MNotification notification(MNotification::DeviceEvent, "", QObject::tr("AppGo! show the start command..."));
+    /*
+    MNotification notification(MNotification::DeviceEvent, "", QObject::tr("AppGo! show the start command..."));
     notification.setImage("icon-m-user-guide");
     notification.publish();
-*/
+    */
+
     orientation->setActive(true);
     vibrate(1000, 0.4f);
     killerTimer->start();
@@ -121,7 +124,7 @@ void GoService::loadConfig()
             for (int i = -1; i < codes.size(); ++i) {
                 if(i==-1)
                     binaryTree->AddItem(0,false);
-                else{
+                else {
                     if(codes[i].toInt() != 0)
                         binaryTree->AddItem(codes[i].toInt(),true);
                 }
@@ -134,7 +137,6 @@ void GoService::loadConfig()
 
     binaryTree->PrintTree();
 }
-
 
 void GoService::vibrate(int duration, qreal intensity)
 {
@@ -186,10 +188,7 @@ void GoService::onChangeOrientationChange(int state)
             player->play();
 
             killerTimer->stop();
-
-            //------------------------timer-----------
             timer->start();
-            //----------------------------------------
         }
     } else {
         qDebug() << "WRONG";
@@ -198,8 +197,8 @@ void GoService::onChangeOrientationChange(int state)
         notification.setImage("icon-m-user-guide");
         notification.publish();
         */
-        killerTimer->stop();
 
+        killerTimer->stop();
         orientation->setActive(false);
         playlist->setCurrentIndex(WRONG);
         playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);

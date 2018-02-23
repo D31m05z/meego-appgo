@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -55,9 +55,8 @@ private:
     {
         if(theRoot == NULL) {
             theRoot = new Node(newData);
-            //  qDebug() << "new"<<newData;
+            //  qDebug() << "new"<< newData;
             last = theRoot;
-
             return;
         }
 
@@ -77,7 +76,6 @@ private:
             for (int j = 0; j < level; ++j) {
                 extraTab+="-";
             }
-
             qDebug()<< "L"<<level<<qPrintable(extraTab )<<"|"<<theRoot->data<<theRoot->exec;
             for (int i = 0; i < 7; ++i) {
                 PrintTree(theRoot->nodes[i],level);
@@ -136,13 +134,14 @@ public:
 
     void AddItem(int newData, bool append)
     {
-        if(append)
+        if(append) {
             Insert(newData, last);
-        else
+        } else {
             Insert(newData, root);
+        }
 
         //    qDebug() << "ROOT" << root->data;
-        //    qDebug() << "LAST" << last->data;
+        //   qDebug() << "LAST" << last->data;
     }
 
     void AddItem(QString program)

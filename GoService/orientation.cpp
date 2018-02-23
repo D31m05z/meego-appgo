@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -39,7 +39,6 @@ Orientation::Orientation(QObject *parent)
     m_sensor->setProperty("alwaysOn",true);
 
     connect(m_sensor, SIGNAL(readingChanged()), SLOT(onReadingChanged()));
-
     m_sensor->start();
 }
 
@@ -62,27 +61,21 @@ void Orientation::onReadingChanged()
     switch(reading->orientation())
     {
     case QOrientationReading::TopUp:
-        qDebug() << "TopUp" << endl;
         emit orientationChanged(QOrientationReading::TopUp);
         break;
     case QOrientationReading::TopDown:
-        qDebug() << "TopDown" << endl;
         emit orientationChanged(QOrientationReading::TopDown);
         break;
     case QOrientationReading::LeftUp:
-        qDebug() << "LeftUp" << endl;
         emit orientationChanged(QOrientationReading::LeftUp);
         break;
     case QOrientationReading::RightUp:
-        qDebug() << "RightUp" << endl;
         emit orientationChanged(QOrientationReading::RightUp);
         break;
     case QOrientationReading::FaceDown:
-        qDebug() << "FaceDown" << endl;
         emit orientationChanged(QOrientationReading::FaceDown);
         break;
     case QOrientationReading::FaceUp:
-        qDebug() << "FaceUp" << endl;
         emit orientationChanged(QOrientationReading::FaceUp);
         break;
     default:

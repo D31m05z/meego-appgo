@@ -38,7 +38,6 @@ using namespace QtMobility;
 class Orientation : public QObject
 {
     Q_OBJECT
-    //Q_PROPERTY(QString state READ state NOTIFY orientationChanged)
 
 public:
     Orientation(QObject *parent = 0);

@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -38,10 +38,10 @@
 
 #include "orientation.h"
 #include "binarytree.h"
+
 #include "powerbuttonlistener.h"
 
-enum Sounds
-{
+enum Sounds{
     LOGIN   = 0,
     PASS    = 1,
     WRONG   = 2,
@@ -52,7 +52,7 @@ class GoService : public QObject
 {
     Q_OBJECT
 public:
-    GoService(QObject* parent = 0);
+    GoService(QObject* parent=0);
     ~GoService();
 
     void vibrate(int duration, qreal intensity);
@@ -74,4 +74,5 @@ private:
     QTimer* killerTimer;
     QFeedbackHapticsEffect* rumble;
 };
+
 #endif // GOSERVICE_H
