@@ -26,13 +26,13 @@
 #include "gosystem.h"
 
 GoSystem::GoSystem(QObject *parent)
-    :QObject(parent)
+    : QObject(parent)
+    , root(parent)
     , passRecord(false)
     , codeNumber(0)
     , hasConfigFile(false)
 {
-    root = parent;
-    QObject *page = root->findChild<QObject *>("mainwindow");
+    QObject* page = root->findChild<QObject *>("mainwindow");
     qDebug() << "I found this page: "  << page;
 
     orientation = new Orientation(parent);
@@ -59,10 +59,20 @@ GoSystem::GoSystem(QObject *parent)
 
 GoSystem::~GoSystem()
 {
+    qDebug() << "DTOR GoSystem" << endl;
+
+    if(passRecord) {
+        qDebug() << "stop pwd recording" << endl;
+        stopPasswordRecord();
+    }
+
+    qDebug() << "before exit" << endl;
+    writeCommands();
+
     delete orientation;
-    delete passFile;
-    delete player;
     delete playlist;
+    delete player;
+    qDebug() << "DTOR finished" << endl;
 }
 
 QString rstrip(const QString& str)
@@ -79,7 +89,7 @@ QString rstrip(const QString& str)
 void GoSystem::loadConfig()
 {
     QFile file("/home/user/appgo.txt");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "ERROR: open file";
         hasConfigFile = false;
         return;
@@ -98,20 +108,20 @@ void GoSystem::loadConfig()
         line = rstrip(line);
 
         index++;
-        if(index==1){
-//           qDebug() << line;
+        if(index==1) {
+           qDebug() << line;
             name = line;
-        }else if(index==2){
+        } else if(index==2) {
             QStringList codes = line.split(" ");
             for (int i = 0; i < codes.size(); ++i) {
-                //qDebug() << codes[i];
+                qDebug() << codes[i];
                 if(codes[i]=="")
                     item.code[i]=0;
                 else
                     item.code[i]=codes[i].toInt();
             }
-        }else if (index == 3 ){
-            //qDebug() << line;
+        } else if (index == 3 ) {
+            qDebug() << line;
             item.exec = line;
             applications.insert(name,item);
             index=0;
@@ -137,15 +147,15 @@ void GoSystem::processDesktopFile(QString fileName)
 
         line = rstrip(line);
 
-        if(line.contains("Exec=")){
+        if(line.contains("Exec=")) {
             line.replace("Exec=","");
             exec = line;
             qDebug() << "++Exec:" << line << endl;
-        }else if(line.contains("Name=")){
+        } else if(line.contains("Name=")) {
             line.replace("Name=","");
             name = line;
             qDebug() << "++Name:" << line << endl;
-        }else if(line.contains("Icon=") && !line.contains("X-Window")){
+        } else if(line.contains("Icon=") && !line.contains("X-Window")) {
             line.replace("Icon=","");
             icon = line;
             qDebug() << "++Icon:" <<line << endl;
@@ -153,7 +163,7 @@ void GoSystem::processDesktopFile(QString fileName)
     }
 
     if(name!=0 && exec !=0 && icon !=0) {
-        if(hasConfigFile ){
+        if(hasConfigFile ) {
             Item i;
             i.exec = exec;
             for (int j = 0; j < 7; ++j) {
@@ -192,14 +202,13 @@ void GoSystem::getData()
 void GoSystem::writeCommands()
 {
     qDebug() << "CREATE COMMAND FILE" << endl;
-    passFile = new QFile("/home/user/appgo.txt");
+    QFile passFile("/home/user/appgo.txt");
 
-    if (!passFile->open(QFile::WriteOnly | QIODevice::Text)) {
+    if (!passFile.open(QFile::WriteOnly | QIODevice::Text)) {
         qDebug() << "FILE CREATE FAIL" << endl;
     }
 
-    QTextStream out(passFile);
-
+    QTextStream out(&passFile);
     QList<QString> appList = applications.keys();
     for (int i = 0; i < appList.size(); ++i) {
         out << appList.at(i)<<endl;
@@ -212,12 +221,14 @@ void GoSystem::writeCommands()
         out << endl << applications[appList.at(i)].exec << endl;
     }
 
-    passFile->close();
+    passFile.close();
 }
 
 void GoSystem::beforeExit()
 {
+    qDebug() << "emit WriteCommands" << endl;
     emit writeCommands();
+    qDebug() << "emit finished" << endl;
 }
 
 void GoSystem::codeToString()
@@ -253,10 +264,10 @@ void GoSystem::codeToString()
 
 void GoSystem::activating()
 {
-    //TODO: test it!!
+    qDebug() << "activating" << endl;
     beforeExit();
 
-    qDebug() << "START SERVICE"<<endl;
+    qDebug() << "START SERVICE"<< endl;
     system("/bin/sh /opt/AppGo/base/service.sh");
 }
 
@@ -307,7 +318,7 @@ void GoSystem::stopPasswordRecord()
 {
     qDebug() << "stopPasswordRecord" << endl;
     passRecord  = false;
-    root->setProperty("isPassRecording",false);
+    root->setProperty("isPassRecording", false);
 }
 
 void GoSystem::onChangeOrientationChange(int state)
@@ -369,7 +380,7 @@ void GoSystem::removeCommand(QString name)
     }
 }
 
-void GoSystem::reflash()
+void GoSystem::refresh()
 {
     system("rm /home/user/appgo.txt");
 }

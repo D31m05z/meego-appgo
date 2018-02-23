@@ -33,7 +33,6 @@ GoService::GoService(QObject *parent)
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/beep.wav"));
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/wrong.wav"));
     playlist->addMedia(QUrl::fromLocalFile("/opt/AppGo/base/start.wav"));
-
     playlist->setCurrentIndex(LOGIN);
     playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
 
@@ -44,9 +43,10 @@ GoService::GoService(QObject *parent)
     orientation = new Orientation(parent);
     orientation->setActive(false);
 
-    connect(orientation,SIGNAL(orientationChanged(int)),SLOT(onChangeOrientationChange(int)));
+    connect(orientation, SIGNAL(orientationChanged(int)), SLOT(onChangeOrientationChange(int)));
 
-    myBT = new BinaryTree();
+    binaryTree = new BinaryTree();
+
     loadConfig();
 
     PowerButtonListener* listener = new PowerButtonListener(this);
@@ -61,12 +61,18 @@ GoService::GoService(QObject *parent)
     killerTimer->setInterval(8000);
     killerTimer->setSingleShot(true);
     connect(killerTimer, SIGNAL(timeout()), this, SLOT(timeOut()));
+
+    rumble = new QFeedbackHapticsEffect();
+    rumble->setAttackIntensity(0.0);
+    rumble->setAttackTime(100);
+    rumble->setFadeTime(100);
+    rumble->setFadeIntensity(0.+0);
 }
 
 GoService::~GoService()
 {
     delete orientation;
-    delete myBT;
+    delete binaryTree;
     delete playlist;
     delete player;
     delete timer;
@@ -79,7 +85,7 @@ void GoService::activate()
     notification.publish();
 */
     orientation->setActive(true);
-    vibrate(1000,0.4f);
+    vibrate(1000, 0.4f);
     killerTimer->start();
 }
 
@@ -97,56 +103,49 @@ QString rstrip(const QString& str)
 void GoService::loadConfig()
 {
     QFile file("/home/user/appgo.txt");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "ERROR: open file";
         return;
     }
 
     int index = 0;
     while (!file.atEnd()) {
-
         QString line(file.readLine());
         line = rstrip(line);
 
         index++;
-        if(index==1){
+        if(index==1) {
             qDebug() << line;
-        }else if(index==2){
+        } else if(index==2) {
             QStringList codes = line.split(" ");
             for (int i = -1; i < codes.size(); ++i) {
                 if(i==-1)
-                    myBT->AddItem(0,false);
+                    binaryTree->AddItem(0,false);
                 else{
                     if(codes[i].toInt() != 0)
-                        myBT->AddItem(codes[i].toInt(),true);
+                        binaryTree->AddItem(codes[i].toInt(),true);
                 }
             }
-        }else if (index == 3 ){
-            myBT->AddItem(line);
+        } else if (index == 3 ) {
+            binaryTree->AddItem(line);
             index=0;
         }
     }
 
-    myBT->PrintTree();
+    binaryTree->PrintTree();
 }
 
 
 void GoService::vibrate(int duration, qreal intensity)
 {
-    QFeedbackHapticsEffect* rumble = new QFeedbackHapticsEffect();
-    rumble->setAttackIntensity(0.0);
-    rumble->setAttackTime(100);
     rumble->setIntensity(intensity);
     rumble->setDuration(duration);
-    rumble->setFadeTime(100);
-    rumble->setFadeIntensity(0.+0);
-
     rumble->start();
 }
 
 void GoService::startApp()
 {
-    myBT->execute();
+    binaryTree->execute();
     orientation->setActive(false);
 }
 
@@ -171,16 +170,17 @@ void GoService::onChangeOrientationChange(int state)
         killerTimer->start();
     }
 
-    if(timer->isActive())
+    if(timer->isActive()) {
         timer->stop();
+    }
 
-    if(myBT->FindCommand(state)) {
+    if(binaryTree->FindCommand(state)) {
         qDebug() << "PASS";
         playlist->setCurrentIndex(PASS);
         playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
         player->play();
 
-        if(myBT->canExecute()) {
+        if(binaryTree->canExecute()) {
             playlist->setCurrentIndex(START);
             playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
             player->play();
@@ -193,10 +193,11 @@ void GoService::onChangeOrientationChange(int state)
         }
     } else {
         qDebug() << "WRONG";
-        /* MNotification notification(MNotification::DeviceEvent, "", QObject::tr("unknown command"));
+        /*
+        MNotification notification(MNotification::DeviceEvent, "", QObject::tr("unknown command"));
         notification.setImage("icon-m-user-guide");
         notification.publish();
-*/
+        */
         killerTimer->stop();
 
         orientation->setActive(false);
@@ -213,6 +214,6 @@ void GoService::powerBtnDoubleClick()
     playlist->setCurrentIndex(LOGIN);
     playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
     player->play();
-    myBT->FindCommand(0);
+    binaryTree->FindCommand(0);
     activate();
 }

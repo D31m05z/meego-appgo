@@ -50,16 +50,13 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer.setSource(QUrl("qrc:/qml/main.qml"));
 
     qDebug() << "$security" << endl;
-    GoSystem* goSystem = new GoSystem(dynamic_cast<QObject*>(viewer.rootObject()));
+    GoSystem goSystem(dynamic_cast<QObject*>(viewer.rootObject()));
 
-    viewer.rootContext()->setContextProperty("myGo", goSystem);
+    viewer.rootContext()->setContextProperty("myGo", &goSystem);
     viewer.showFullScreen();
-
-    qDebug() << "$inicialize" << endl;
 
     qDebug() << "$pSplash close" << endl;
     pSplash->close();
     delete pSplash;
-
     return app->exec();
 }

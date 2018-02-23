@@ -36,30 +36,23 @@
 #include <MNotification>
 #include <QTimer>
 
-
 #include "orientation.h"
 #include "binarytree.h"
-//#include "qshake.h"
-
 #include "powerbuttonlistener.h"
-
-//#include <iostream>
-//using namespace std;
-//#define qDebug() cout
 
 enum Sounds
 {
-    LOGIN=0,
-    PASS=1,
-    WRONG=2,
-    START=3
+    LOGIN   = 0,
+    PASS    = 1,
+    WRONG   = 2,
+    START   = 3
 };
 
 class GoService : public QObject
 {
     Q_OBJECT
 public:
-    GoService(QObject* parent=0);
+    GoService(QObject* parent = 0);
     ~GoService();
 
     void vibrate(int duration, qreal intensity);
@@ -74,10 +67,11 @@ public slots:
 
 private:
     Orientation* orientation;
-    BinaryTree*myBT;
+    BinaryTree* binaryTree;
     QMediaPlaylist* playlist;
     QMediaPlayer* player;
-    QTimer *timer;
-    QTimer *killerTimer;
+    QTimer* timer;
+    QTimer* killerTimer;
+    QFeedbackHapticsEffect* rumble;
 };
 #endif // GOSERVICE_H

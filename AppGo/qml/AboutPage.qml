@@ -95,7 +95,7 @@ Page {
         width: 450
         font.pointSize: 35
         font.family: iFont.name
-        text: "If you install a new application, you need to press the reflesh button in this application, that will refresh the application list."
+        text: "If you install a new application, you need to press the refresh button in this application, that will refresh the application list."
         color: "yellow"
         wrapMode: Text.WordWrap
         enabled: false
@@ -107,11 +107,11 @@ Page {
         y: 450
         anchors.left: parent.left
         anchors.right: parent.right
-        text: "reflesh"
+        text: "refresh"
 
         onClicked: {
-            myGo.reflash();
-            console.debug("refleash button pressd");
+            myGo.refresh();
+            console.debug("refresh button pressd");
         }
 
     }

@@ -1,8 +1,7 @@
-CONFIG += meegotouch link_pkgconfig
-PKGCONFIG += gq-gconf libresourceqt1 hal glib-2.0 dbus-glib-1
 
+CONFIG += mobility meegotouch link_pkgconfig
+PKGCONFIG += gq-gconf libresourceqt1 hal glib-2.0 dbus-glib-1
 MOBILITY = multimedia feedback messaging sensors
-CONFIG += mobility meegotouch
 
 QT     += gui network
 

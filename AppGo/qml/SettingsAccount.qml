@@ -91,7 +91,7 @@ Page {
         //----------------swipe---------------------------------
     }
 
-    Image{
+    Image {
         id: settings_items
         x:50
         y:200

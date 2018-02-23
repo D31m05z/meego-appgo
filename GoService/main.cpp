@@ -27,12 +27,11 @@
 #include <signal.h>
 #include "goservice.h"
 
-QApplication *app;
+QApplication* app;
 
-void term(int signum)
+void term(int /*signum*/)
 {
     MNotification notification(MNotification::DeviceEvent, "", "Deactivated...");
-
     notification.setImage("icon-m-user-guide");
     notification.publish();
     app->quit();
@@ -42,11 +41,7 @@ int main(int argc, char *argv[])
 {
     app = new QApplication(argc, argv);
 
-    //---------------- notify -----------------
-    //MComponentData::createInstance(argc, argv);
-    //-----------------------------------------*/
-
-    GoService* service = new GoService(app);
+    GoService service(app);
 
     signal(SIGTERM, term);
 

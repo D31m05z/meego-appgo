@@ -47,17 +47,14 @@ Orientation::Orientation(QObject *parent) :
 
 Orientation::~Orientation()
 {
+    qDebug() << "DTOR orientation" << endl;
     delete m_sensor;
+    qDebug() << "DTOR finished" << endl;
 }
 
 void Orientation::setActive(bool enable)
 {
     active = enable;
-}
-
-void Orientation::vibrate()
-{
-
 }
 
 void Orientation::onReadingChanged()
@@ -69,50 +66,37 @@ void Orientation::onReadingChanged()
         case QOrientationReading::TopUp:
             root->setProperty("actualStateImg","qrc:/images/TOP_SIDE.png");
             root->setProperty("actualState","Top side");
-
             qDebug() << "TopUp:" << QOrientationReading::TopUp <<endl;
-            vibrate();
-
             emit orientationChanged(1);
             break;
         case QOrientationReading::TopDown:
             root->setProperty("actualStateImg","qrc:/images/BOTTOM_SIDE.png");
             root->setProperty("actualState","Bottom side");
             qDebug() << "TopDown:" << QOrientationReading::TopDown << endl;
-            vibrate();
-
             emit orientationChanged(2);
             break;
         case QOrientationReading::LeftUp:
             root->setProperty("actualStateImg","qrc:/images/LEFT_SIDE.png");
             root->setProperty("actualState","Left side");
             qDebug() << "LeftUp:" << QOrientationReading::LeftUp << endl;
-            vibrate();
-
             emit orientationChanged(3);
             break;
         case QOrientationReading::RightUp:
             root->setProperty("actualStateImg","qrc:/images/RIGHT_SIDE.png");
             root->setProperty("actualState","Right side");
             qDebug() << "RightUp:" << QOrientationReading::RightUp << endl;
-            vibrate();
-
             emit orientationChanged(4);
             break;
         case QOrientationReading::FaceDown:
             root->setProperty("actualStateImg","qrc:/images/BACK_SIDE.png");
             root->setProperty("actualState","Back side");
             qDebug() << "FaceDown" << endl;
-            vibrate();
-
             emit orientationChanged(6);
             break;
         case QOrientationReading::FaceUp:
             root->setProperty("actualStateImg","qrc:/images/FRONT_SIDE.png");
             root->setProperty("actualState","Front side");
             qDebug() << "FaceUp:" << QOrientationReading::FaceUp << endl;
-            vibrate();
-
             emit orientationChanged(5);
             break;
         default:

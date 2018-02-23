@@ -144,11 +144,6 @@ Page {
 
     Component.onDestruction: {
         console.log("--DESTRUCTOR");
-
-        if(myGo.isPassRecording())
-            myGo.stopPasswordRecord();
-
-        myGo.beforeExit();
     }
 
     function powerSaveON(){

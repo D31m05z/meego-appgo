@@ -27,6 +27,7 @@
 #define BINARYTREE_H
 
 #include <QDebug>
+
 struct Node
 {
     int data;
@@ -47,7 +48,6 @@ class BinaryTree
     int level;
 
 private:
-
     void Insert(int newData, Node* &theRoot, int l)
     {
         if(theRoot == NULL) {
@@ -95,10 +95,11 @@ public:
 
     void AddItem(int newData, bool append)
     {
-        if(append)
+        if(append) {
             Insert(newData, last,level);
-        else
+        } else {
             Insert(newData, root,level);
+        }
 
         qDebug() << "ROOT" << root->data;
         qDebug() << "LAST" << last->data;

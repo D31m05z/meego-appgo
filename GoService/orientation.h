@@ -45,8 +45,6 @@ public:
     ~Orientation();
 
     void setActive(bool enable);
-private:
-    void vibrate();
 
 signals:
     void orientationChanged(int state);
@@ -56,7 +54,6 @@ private slots:
 
 private:
     QOrientationSensor* m_sensor;
-    QFeedbackHapticsEffect *rumble;
     bool active;
 };
 

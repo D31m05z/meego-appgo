@@ -66,7 +66,6 @@ public:
     void loadConfig();
     void codeToString();
 
-
     Q_INVOKABLE void orientationEnable(bool enable);
     Q_INVOKABLE bool isPassRecording();
     Q_INVOKABLE void startPasswordRecord();
@@ -76,7 +75,7 @@ public:
     Q_INVOKABLE void removeCommand(QString name);
     Q_INVOKABLE void exitAndActivating();
     Q_INVOKABLE bool haveCommand(QString name);
-    Q_INVOKABLE void reflash();
+    Q_INVOKABLE void refresh();
 
 public slots:
     void onChangeOrientationChange(int state);
@@ -92,7 +91,6 @@ private:
 
     QObject* root;
     Orientation* orientation;
-    QFile* passFile;
     QString selected;
     QHash<QString,Item> applications;
     QMediaPlayer* player;
