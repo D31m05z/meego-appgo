@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -28,8 +28,8 @@
 
 #include "orientation.h"
 
-Orientation::Orientation(QObject *parent) :
-    QObject(parent)
+Orientation::Orientation(QObject *parent)
+    : QObject(parent)
 {
     root = parent;
     active = false;
@@ -47,9 +47,7 @@ Orientation::Orientation(QObject *parent) :
 
 Orientation::~Orientation()
 {
-    qDebug() << "DTOR orientation" << endl;
     delete m_sensor;
-    qDebug() << "DTOR finished" << endl;
 }
 
 void Orientation::setActive(bool enable)

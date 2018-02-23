@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -41,10 +41,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     pSplash->setPixmap(QPixmap("/opt/AppGo/base/splash.png"));
     pSplash->show();
 
-    //---------------- notify -----------------
-    //MComponentData::createInstance(argc, argv);
-    //-----------------------------------------*/
-
     qDebug() << "$viewer" << endl;
     QDeclarativeView viewer;
     viewer.setSource(QUrl("qrc:/qml/main.qml"));
@@ -55,8 +51,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("myGo", &goSystem);
     viewer.showFullScreen();
 
+    qDebug() << "$inicialize" << endl;
     qDebug() << "$pSplash close" << endl;
     pSplash->close();
     delete pSplash;
+
     return app->exec();
 }
+

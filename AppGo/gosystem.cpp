@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -32,7 +32,7 @@ GoSystem::GoSystem(QObject *parent)
     , codeNumber(0)
     , hasConfigFile(false)
 {
-    QObject* page = root->findChild<QObject *>("mainwindow");
+    QObject *page = root->findChild<QObject *>("mainwindow");
     qDebug() << "I found this page: "  << page;
 
     orientation = new Orientation(parent);
@@ -59,8 +59,6 @@ GoSystem::GoSystem(QObject *parent)
 
 GoSystem::~GoSystem()
 {
-    qDebug() << "DTOR GoSystem" << endl;
-
     if(passRecord) {
         qDebug() << "stop pwd recording" << endl;
         stopPasswordRecord();
@@ -70,9 +68,8 @@ GoSystem::~GoSystem()
     writeCommands();
 
     delete orientation;
-    delete playlist;
     delete player;
-    qDebug() << "DTOR finished" << endl;
+    delete playlist;
 }
 
 QString rstrip(const QString& str)
@@ -109,19 +106,20 @@ void GoSystem::loadConfig()
 
         index++;
         if(index==1) {
-           qDebug() << line;
+            //qDebug() << line;
             name = line;
         } else if(index==2) {
             QStringList codes = line.split(" ");
             for (int i = 0; i < codes.size(); ++i) {
-                qDebug() << codes[i];
+                //qDebug() << codes[i];
                 if(codes[i]=="")
                     item.code[i]=0;
                 else
                     item.code[i]=codes[i].toInt();
             }
         } else if (index == 3 ) {
-            qDebug() << line;
+            //qDebug() << line;
+
             item.exec = line;
             applications.insert(name,item);
             index=0;
@@ -133,8 +131,7 @@ void GoSystem::loadConfig()
 
 void GoSystem::processDesktopFile(QString fileName)
 {
-    QFile file("/usr/share/applications/" + fileName);
-
+    QFile file("/usr/share/applications/"+fileName);
     QString name=0;
     QString exec=0;
     QString icon=0;
@@ -163,7 +160,7 @@ void GoSystem::processDesktopFile(QString fileName)
     }
 
     if(name!=0 && exec !=0 && icon !=0) {
-        if(hasConfigFile ) {
+        if(!hasConfigFile) {
             Item i;
             i.exec = exec;
             for (int j = 0; j < 7; ++j) {
@@ -180,7 +177,7 @@ void GoSystem::processDesktopFile(QString fileName)
         if(applications[name].code[0]!=0)
             active = true;
 
-        emit addApp(exec, name, icon, active);
+        emit addApp(exec,name,icon,active);
     }
 }
 
@@ -226,9 +223,7 @@ void GoSystem::writeCommands()
 
 void GoSystem::beforeExit()
 {
-    qDebug() << "emit WriteCommands" << endl;
     emit writeCommands();
-    qDebug() << "emit finished" << endl;
 }
 
 void GoSystem::codeToString()
@@ -259,19 +254,18 @@ void GoSystem::codeToString()
             break;
         }
     }
-    root->setProperty("password",applications[selected].command);
+    root->setProperty("password", applications[selected].command);
 }
 
 void GoSystem::activating()
 {
-    qDebug() << "activating" << endl;
     beforeExit();
-
-    qDebug() << "START SERVICE"<< endl;
+    qDebug() << "START SERVICE"<<endl;
     system("/bin/sh /opt/AppGo/base/service.sh");
 }
 
 ///////////INVOKE
+
 bool GoSystem::haveCommand(QString name)
 {
     if(applications[name].code[0] != 0)
@@ -318,7 +312,7 @@ void GoSystem::stopPasswordRecord()
 {
     qDebug() << "stopPasswordRecord" << endl;
     passRecord  = false;
-    root->setProperty("isPassRecording", false);
+    root->setProperty("isPassRecording",false);
 }
 
 void GoSystem::onChangeOrientationChange(int state)
@@ -365,9 +359,7 @@ void GoSystem::setSelectedItem(QString name)
 {
     qDebug() << "setSelectedItem:"<<name << endl;
     selected = name;
-
     //qDebug()<<"EXEC>"<<applications[name].exec;
-
     codeToString();
 }
 

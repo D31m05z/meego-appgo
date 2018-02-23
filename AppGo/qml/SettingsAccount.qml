@@ -35,6 +35,7 @@ Page {
     clip: true
 
     property alias backgroundImage:  background.source
+    property int errorCount: 0
 
     FontLoader { id: iFont; source: "../fonts/AgencyFB.ttf" }
 
@@ -131,7 +132,7 @@ Page {
 
     Image {
         id: appIcon
-        source:  "file:"+selectdIcon
+        source:     selectdIcon
         width: 80
         height: 80
 

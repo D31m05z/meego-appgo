@@ -10,7 +10,7 @@
 *                                                             *
 *              contact_adress: sk8Geri@gmail.com               *
 *                                                               *
-*       This : is a part of the work done by aFagylaltos.     *
+*       This file is a part of the work done by aFagylaltos.     *
 *         You are free to use the code in any way you like,      *
 *         modified, unmodified or copied into your own work.     *
 *        However, I would like you to consider the following:    *
@@ -43,18 +43,19 @@ struct Node
     }
 };
 
+
 class BinaryTree
 {
     int level;
 
 private:
+
     void Insert(int newData, Node* &theRoot, int l)
     {
         if(theRoot == NULL) {
             theRoot = new Node(newData);
             qDebug() << "new"<<newData;
             last = theRoot;
-
             return;
         }
 
@@ -65,7 +66,6 @@ private:
         }
     }
 
-
     void PrintTree(Node* theRoot, int level)
     {
         QString extraTab;
@@ -74,7 +74,6 @@ private:
             for (int j = 0; j < level; ++j) {
                 extraTab+="-";
             }
-
             qDebug()<< "L"<<level<<qPrintable(extraTab )<<"|"<<theRoot->data<<theRoot->exec;
             for (int i = 0; i < 6; ++i) {
                 PrintTree(theRoot->nodes[i],level);
@@ -95,11 +94,10 @@ public:
 
     void AddItem(int newData, bool append)
     {
-        if(append) {
+        if(append)
             Insert(newData, last,level);
-        } else {
+        else
             Insert(newData, root,level);
-        }
 
         qDebug() << "ROOT" << root->data;
         qDebug() << "LAST" << last->data;
@@ -117,6 +115,5 @@ public:
         PrintTree(root,0);
     }
 };
-
 
 #endif // BINARYTREE_H

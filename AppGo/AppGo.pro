@@ -5,9 +5,8 @@ QT += declarative
 CONFIG += qdeclarative-boostable
 
 CONFIG += meegotouch mobility
-#link_pkgconfig
+
 MOBILITY += multimedia feedback sensors
-#PKGCONFIG += gq-gconf
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \

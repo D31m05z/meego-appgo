@@ -27,6 +27,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.meego.extras 1.0
 
+
 Item {
 
     property real oldX: 0
@@ -36,6 +37,7 @@ Item {
     property bool share: false
     property bool mousePressed: false
 
+    property int errorCount: 0
     Component {
         id: applistDelegate
 
@@ -65,10 +67,21 @@ Item {
 
                 onStatusChanged:{
 
-                    if (appIcon.status == Image.Ready) console.log('Loaded')
+                    if (appIcon.status == Image.Ready){
+                        errorCount = 0;
+                        console.log("Loaded")
+                    }
+
                     if (appIcon.status == Image.Error){
-                        console.log("error image load");
-                        appIcon.source = "file:/opt/AppGo/base/fuck.png";
+                        errorCount++;
+
+                        //console.log("error image load:" + icon);
+                        console.log(appIcon.source)
+                        if(errorCount == 1){
+                            appIcon.source = "file:/usr/share/themes/blanco/meegotouch/icons/"+icon+".png"
+                        } else if(errorCount == 2){
+                            appIcon.source = "file:/opt/AppGo/base/fuck.png";
+                        }
                     }
 
                 }
@@ -145,7 +158,8 @@ Item {
                             myGo.orientationEnable(true);
                             myGo.setSelectedItem(name);
                             selectd = name;
-                            selectdIcon = icon;
+
+                            selectdIcon = appIcon.source;
                             selectdIndex = index;
                             pageStack.push(settingAccount);
 
