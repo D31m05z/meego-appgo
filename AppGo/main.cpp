@@ -46,9 +46,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer.setSource(QUrl("qrc:/qml/main.qml"));
 
     qDebug() << "$security" << endl;
-    GoSystem goSystem(dynamic_cast<QObject*>(viewer.rootObject()));
+    GoSystem service(dynamic_cast<QObject*>(viewer.rootObject()));
 
-    viewer.rootContext()->setContextProperty("myGo", &goSystem);
+    QObject::connect(&service, SIGNAL(finished()), app.data(), SLOT(quit()));
+
+    viewer.rootContext()->setContextProperty("myGo", &service);
     viewer.showFullScreen();
 
     qDebug() << "$inicialize" << endl;

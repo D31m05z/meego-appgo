@@ -84,6 +84,7 @@ public slots:
 
 signals:
     void addApp(QVariant, QVariant, QVariant,QVariant);
+    void finished();
 
 private:
     bool passRecord;

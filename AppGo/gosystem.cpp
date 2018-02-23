@@ -262,6 +262,9 @@ void GoSystem::activating()
     beforeExit();
     qDebug() << "START SERVICE"<<endl;
     system("/bin/sh /opt/AppGo/base/service.sh");
+
+    qDebug() << "emit finished"<<endl;
+    emit finished();
 }
 
 ///////////INVOKE
@@ -277,7 +280,7 @@ bool GoSystem::haveCommand(QString name)
 void GoSystem::exitAndActivating()
 {
     qDebug() << "ACTIVATING...";
-    QTimer::singleShot(2000,this,SLOT(activating()));
+    QTimer::singleShot(2000, this, SLOT(activating()));
     MNotification notification(MNotification::DeviceEvent, "", QObject::tr("Activating... after activating the AppGo exiting!"));
     notification.setImage("icon-m-user-guide");
     notification.publish();
